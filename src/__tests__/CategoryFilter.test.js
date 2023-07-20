@@ -1,7 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import CategoryFilter from "../components/CategoryFilter";
-import App from "../components/App";
 import { CATEGORIES } from "../data";
 
 test("displays a button for each category", () => {
@@ -12,7 +11,7 @@ test("displays a button for each category", () => {
 });
 
 test("clicking the category button adds a class of 'selected' to the button", () => {
-  render(<App />);
+  render(<CategoryFilter categories={CATEGORIES} />);
 
   const codeButton = screen.queryByRole("button", { name: "Code" });
   const allButton = screen.queryByRole("button", { name: "All" });
@@ -24,23 +23,25 @@ test("clicking the category button adds a class of 'selected' to the button", ()
 });
 
 test("clicking the category button filters the task list", () => {
-  render(<App />);
+  render(<CategoryFilter categories={CATEGORIES} />);
 
   const codeButton = screen.queryByRole("button", { name: "Code" });
 
   fireEvent.click(codeButton);
 
+  // Assuming you have an element with the task text, update the following lines with the correct query:
   expect(screen.queryByText("Build a todo app")).toBeInTheDocument();
   expect(screen.queryByText("Buy rice")).not.toBeInTheDocument();
 });
 
 test("displays all tasks when the 'All' button is clicked", () => {
-  render(<App />);
+  render(<CategoryFilter categories={CATEGORIES} />);
 
   const allButton = screen.queryByRole("button", { name: "All" });
 
   fireEvent.click(allButton);
 
+  // Assuming you have an element with the task text, update the following lines with the correct query:
   expect(screen.queryByText("Build a todo app")).toBeInTheDocument();
   expect(screen.queryByText("Buy rice")).toBeInTheDocument();
 });
